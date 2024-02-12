@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1065716460851",
+    "project_id": "chat-app-f30a5",
+    "storage_bucket": "chat-app-f30a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065716460851:android:17d27d0a7ceacd6f07e246",
+        "android_client_info": {
+          "package_name": "com.example.chat_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPOntXcFvifB48qSspC05Oym8twl0u08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
