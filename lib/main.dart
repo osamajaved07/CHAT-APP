@@ -1,11 +1,16 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, unused_import
 
+import 'package:chat_application/constants.dart';
 import 'package:chat_application/controller/auth_controller.dart';
 import 'package:chat_application/firebase_options.dart';
-import 'package:chat_application/forgot_password_page.dart';
-import 'package:chat_application/homescreen.dart';
-import 'package:chat_application/loginpage.dart';
-import 'package:chat_application/signuppage.dart';
+
+
+import 'package:chat_application/screens/forgot_password_page.dart';
+import 'package:chat_application/screens/homescreen.dart';
+import 'package:chat_application/screens/loginpage.dart';
+import 'package:chat_application/screens/signuppage.dart';
+
+import 'package:chat_application/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,13 +31,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Chat App',
-      theme: ThemeData(
+      theme: lightThemeData(context),
+      darkTheme: darkThemeData(context),
+      themeMode: ThemeMode.light,
 
-        textTheme: GoogleFonts.loraTextTheme(),
-        
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 183, 166, 58)),
-        useMaterial3: true,
-      ),
+      
+      
       debugShowCheckedModeBanner: false,
 
       routes: {
