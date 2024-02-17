@@ -8,6 +8,7 @@ import 'package:chat_application/firebase_options.dart';
 import 'package:chat_application/screens/forgot_password_page.dart';
 import 'package:chat_application/screens/homescreen.dart';
 import 'package:chat_application/screens/loginpage.dart';
+import 'package:chat_application/screens/message_screen.dart';
 import 'package:chat_application/screens/signuppage.dart';
 
 import 'package:chat_application/theme.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         "/home": (context) => HomePage(),
         "/": (context) => checkuser(),
         "/forgotpassword": (context) => ForgotPasswordPage(),
+        "/messagescreen" : (context) => MessagesScreen(),
       },
       
     );

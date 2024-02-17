@@ -1,6 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names
 
+import 'package:chat_application/components/body.dart';
+import 'package:chat_application/constants.dart';
 import 'package:chat_application/controller/auth_controller.dart';
+import 'package:chat_application/model/Chat.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,38 +16,68 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  int _selectedIndex = 1;
+
   final formkey = GlobalKey<FormState>();
   
   TextEditingController _emailcontroller = TextEditingController();
   TextEditingController _passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            children: [
-              Text("Welcome to App"),
-              SizedBox(height: 20,),
-              ElevatedButton(onPressed: (){
-                Navigator.pushNamed(context, "/forgotpassword");
-              }, child: Text("data")),
+    return Scaffold(
+      appBar: App_Bar(),
 
-              SizedBox(height: 12,),
+      body: Body(),
 
-              ElevatedButton(onPressed: (){
-                  AuthService().logout();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Logged Out.....")));
-                    Navigator.pushReplacementNamed(context, "/login");
-                  
-                }, child: Text("Logout", style: TextStyle(
-                  fontSize: 20
-                ),))
-              ],
-              
-          ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        backgroundColor: kPrimaryColor,
+        onPressed: (){},
+        child: Icon(Icons.person_add_alt_1, color: Colors.white,),),
+
+        bottomNavigationBar: Bottomnavigationbar(),
+    );
+  }
+
+  BottomNavigationBar Bottomnavigationbar() {
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+
+        onTap: (value){
+          setState(() {
+            _selectedIndex = value;
+          });
+
+        },
+        items: [
+        BottomNavigationBarItem(icon: Icon(Icons.messenger),
+        label: "chats"
         ),
-      ),
+
+        BottomNavigationBarItem(icon: Icon(Icons.people),
+        label: "People"
+        ),
+
+        BottomNavigationBarItem(icon: Icon(Icons.call),
+        label: "Calls"
+        ),
+
+        BottomNavigationBarItem(icon: CircleAvatar(
+          radius: 14,
+          backgroundImage: AssetImage("assets/images/user_2.png"),),
+        label: "Profile")
+      ],);
+  }
+
+  AppBar App_Bar() {
+    return AppBar(
+      backgroundColor: kPrimaryColor,
+      automaticallyImplyLeading: false,
+      title: Text("Chats"),
+      actions: [
+        IconButton(onPressed: (){}, icon: Icon(Icons.search))
+      ],
     );
   }
 }
