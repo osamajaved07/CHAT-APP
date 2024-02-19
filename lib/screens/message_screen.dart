@@ -1,6 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, camel_case_types
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, camel_case_types, avoid_unnecessary_containers, deprecated_member_use, unused_import
 
+import 'package:chat_application/components/messages.dart';
+import 'package:chat_application/components/text_messages.dart';
 import 'package:chat_application/constants.dart';
+import 'package:chat_application/model/ChatMessage.dart';
 import 'package:flutter/material.dart';
 
 class MessagesScreen extends StatelessWidget {
@@ -62,13 +65,35 @@ class mainBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Spacer(),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal:kDefaultPadding),
+            child: ListView.builder(
+            itemCount: demeChatMessages.length,
+            itemBuilder: (context, index) => Messages(
+              message: demeChatMessages[index],
+              )
+              ),
+          ),
+            ),
+
         ChatInputField(),
         
       ],
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 class ChatInputField extends StatelessWidget {
   const ChatInputField({

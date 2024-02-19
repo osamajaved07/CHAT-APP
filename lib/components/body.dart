@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print
 
 import 'package:chat_application/components/chat_card.dart';
 import 'package:chat_application/components/filled_outline_button.dart';
