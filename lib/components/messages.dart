@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, dead_code, unreachable_switch_case, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, dead_code, unreachable_switch_case, sized_box_for_whitespace, deprecated_member_use, unused_element
 
 import "package:chat_application/components/audio_message.dart";
 import "package:chat_application/components/text_messages.dart";
@@ -52,8 +52,48 @@ class Messages extends StatelessWidget {
             SizedBox(width: kDefaultPadding / 2,)
           ],
           messageContaint(message),
+          if (message.isSender ) MessageStatusDot(status: message.messageStatus)
         ],
       ),
+    );
+  }
+}
+
+class MessageStatusDot extends StatelessWidget {
+  final MessageStatus status;
+
+  const MessageStatusDot({super.key, required this.status});
+  
+  @override
+  Widget build(BuildContext context) {
+
+    Color dotColor (MessageStatus status) {
+      switch (status) {
+        case MessageStatus.not_sent:
+          return kErrorColor;
+          break;
+          case MessageStatus.not_view:
+          return Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.1);
+          break;
+          case MessageStatus.viewed:
+          return kPrimaryColor;
+          break;
+        default:
+        return Colors.transparent;
+      }
+    }
+    return Container(
+      margin: EdgeInsets.only(left: kDefaultPadding / 2),
+      height: 12,
+      width: 12,
+      decoration: BoxDecoration(
+        color: dotColor(status),
+        shape: BoxShape.circle
+      ),
+      child: Icon(
+        status == MessageStatus.not_sent ? Icons.close : Icons.done,
+      size: 8,
+      color: Theme.of(context).scaffoldBackgroundColor,),
     );
   }
 }
