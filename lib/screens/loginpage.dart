@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_final_fields, unused_field
+// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_final_fields, unused_field, unnecessary_string_escapes
 
 
 import 'package:chat_application/controller/auth_controller.dart';
@@ -32,7 +32,7 @@ class _loginpageState extends State<loginpage> {
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('images/log.png', width: 250,height: 250,),
+                Image.asset('assets/images/login.png', width: 250,height: 250,),
                     
                 Text('LOGIN',
                 style: GoogleFonts.lora(

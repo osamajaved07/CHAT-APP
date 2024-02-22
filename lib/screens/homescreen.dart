@@ -76,7 +76,16 @@ class _HomePageState extends State<HomePage> {
       automaticallyImplyLeading: false,
       title: Text("Chats"),
       actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.search))
+        Row(
+          children: [
+            
+            IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+            IconButton.outlined(onPressed: (){
+              AuthService().logout();
+              Navigator.pushReplacementNamed(context, "/login");
+            }, icon: Icon(Icons.logout)),
+          ],
+        )
       ],
     );
   }

@@ -30,9 +30,9 @@ class _signuppageState extends State<signuppage> {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'images/sign.png',
-                  width: 250,
-                  height: 250,
+                  'assets/images/signUp.png',
+                  width: 200,
+                  height: 200,
                 ),
                 Text(
                   'SIGN UP',
