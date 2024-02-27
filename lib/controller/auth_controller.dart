@@ -1,15 +1,32 @@
-// ignore_for_file: unused_import, unused_local_variable
+// ignore_for_file: unused_import, unused_local_variable, no_leading_underscores_for_local_identifiers, dead_code
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService{
 
-  Future <String> createAccountWithEmail(String email ,String password) async {
+  Future <String> createAccountWithEmail( String email ,String password) async {
+    // FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
     try{
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email, 
+        password: password);
+        // After creating the account, save user data in Firestore
+        User? user = FirebaseAuth.instance.currentUser;
+        if(user != null) {
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+            'email' : email,
+            'status' : 'Unavailable',
+            });
+        }
+
       return "Account Created";
+
+
+      // _firestore.collection('users').doc();
       
 
     }

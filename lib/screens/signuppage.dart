@@ -144,7 +144,7 @@ class _signuppageState extends State<signuppage> {
               if (formkey.currentState!.validate()) {
                 AuthService()
                     .createAccountWithEmail(
-                        _emailcontroller.text, _passwordcontroller.text)
+                        _emailcontroller.text, _passwordcontroller.text,)
                     .then((value) {
                   if (value == "Account Created") {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

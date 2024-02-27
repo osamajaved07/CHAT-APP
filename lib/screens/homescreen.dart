@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names, sized_box_for_whitespace, await_only_futures, no_leading_underscores_for_local_identifiers, avoid_print
 
 import 'package:chat_application/components/body.dart';
 import 'package:chat_application/constants.dart';
@@ -15,19 +15,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Map<String, dynamic> userMap;
+  bool isLoading = false;
 
   int _selectedIndex = 1;
 
   final formkey = GlobalKey<FormState>();
+  final TextEditingController _search = TextEditingController();
   
   TextEditingController _emailcontroller = TextEditingController();
   TextEditingController _passwordcontroller = TextEditingController();
+
+  void onSearch () async {
+
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    setState(() {
+      isLoading = true;
+    });
+    await _firestore.collection('users').where("email", isEqualTo: _search.text)
+    .get().then((value) {
+      setState(() {
+        userMap = value.docs[0].data();
+        isLoading = false;
+      });
+      print(userMap);
+
+    });
+    
+
+  }
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
+
       appBar: App_Bar(),
 
-      body: Body(),
+      body: isLoading? Center(
+        child: Container(
+          height: size.height / 20,
+          width: size.width / 20,
+          child: CircularProgressIndicator(),
+          
+        ),
+      ) : Body(),
 
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
@@ -78,8 +110,6 @@ class _HomePageState extends State<HomePage> {
       actions: [
         Row(
           children: [
-            
-            IconButton(onPressed: (){}, icon: Icon(Icons.search)),
             IconButton.outlined(onPressed: (){
               AuthService().logout();
               Navigator.pushReplacementNamed(context, "/login");
