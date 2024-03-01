@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/Video Place Here.png
+    - assets/images/bg1.png
     
     - assets/icons/
     - images/google.png

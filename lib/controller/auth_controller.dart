@@ -8,6 +8,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> setStatus(String status) async {
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+      "status": status,
+    });
+    print("Status Updated to $status");
+  }
   Future<String> createAccountWithEmail(String email, String password) async {
     // FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -50,6 +57,7 @@ class AuthService {
   }
 
   Future logout() async {
+    await setStatus("Offline");
     await FirebaseAuth.instance.signOut();
   }
 

@@ -28,36 +28,36 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   TextEditingController _emailcontroller = TextEditingController();
   TextEditingController _passwordcontroller = TextEditingController();
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    setStatus("Online");
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addObserver(this);
+  //   setStatus("Online");
+  // }
 
-  void setStatus(String status) async {
-    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
-      "status": status,
+  // void setStatus(String status) async {
+  //   await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+  //     "status": status,
       
-    });
-    print("Status Updated");
-  }
+  //   });
+  //   print("Status Updated");
+  // }
 
-  @override 
-void didChangeAppLifecycleState(AppLifecycleState state) {
-  super.didChangeAppLifecycleState(state);
-  print("App lifecycle state changed to: $state");
+//   @override 
+// void didChangeAppLifecycleState(AppLifecycleState state) {
+//   super.didChangeAppLifecycleState(state);
+//   print("App lifecycle state changed to: $state");
   
-  if (state == AppLifecycleState.resumed) {
-    setStatus("Online");
-  } else {
-    // Delaying the setting of status to offline to avoid flickering
-    setStatus("Offline");
-  }
-}
+//   if (state == AppLifecycleState.resumed) {
+//     setStatus("Online");
+//   } else {
+//     // Delaying the setting of status to offline to avoid flickering
+//     setStatus("Offline");
+//   }
+// }
 
 
 

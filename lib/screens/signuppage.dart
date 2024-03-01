@@ -1,8 +1,9 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_final_fields, unused_field, unused_import, curly_braces_in_flow_control_structures, sized_box_for_whitespace
+// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_final_fields, unused_field, unused_import, curly_braces_in_flow_control_structures, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:chat_application/controller/auth_controller.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class signuppage extends StatefulWidget {
@@ -22,59 +23,95 @@ class _signuppageState extends State<signuppage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple[50],
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 28),
-          child: Form(
-            key: formkey,
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/signUp.png',
-                  width: 200,
-                  height: 200,
+      body: Stack(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Image.asset(
+            'assets/images/bg1.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/signUp.png',
+                width: 250,
+                height: 250,
+              ),
+            ],
+          ),
+          Positioned(
+            top: 250, // Adjust this value based on the image height
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height - 150,
+              // height: double.maxFinite,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                  color: Color.fromARGB(168, 255, 255, 255)),
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20,top: 18),
+                    child: Form(
+                      key: formkey,
+                      child: Column(
+                        children: [
+                          Text(
+                            'SIGN UP',
+                            style: GoogleFonts.lora(
+                                fontSize: 40, fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            'Create your account below',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w200,
+                                color: Colors.black45),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          namefield(context),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          emailfield(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          passwordfield(),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          signupbutton(context),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          googleloginbutton(context),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          login(context)
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                Text(
-                  'SIGN UP',
-                  style: GoogleFonts.lora(
-                      fontSize: 40, fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  'Create your account below',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w200,
-                      color: Colors.black45),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                namefield(context),
-                SizedBox(
-                  height: 20,
-                ),
-                emailfield(),
-                SizedBox(
-                  height: 20,
-                ),
-                passwordfield(),
-                SizedBox(
-                  height: 32,
-                ),
-                signupbutton(context),
-                SizedBox(
-                  height: 20,
-                ),
-                googleloginbutton(context),
-                SizedBox(
-                  height: 20,
-                ),
-                login(context)
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -83,14 +120,17 @@ class _signuppageState extends State<signuppage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Already have an account?"),
+        Text(
+          "Already have an account?",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
             child: Text(
               'LogIn',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ))
       ],
     );
@@ -130,7 +170,7 @@ class _signuppageState extends State<signuppage> {
             ),
             Text(
               'Continue with google',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             )
           ],
         ));
@@ -143,9 +183,11 @@ class _signuppageState extends State<signuppage> {
         child: ElevatedButton(
             onPressed: () {
               if (formkey.currentState!.validate()) {
-                
-                    AuthService().createAccountWithEmail(
-                        _emailcontroller.text, _passwordcontroller.text, )
+                AuthService()
+                    .createAccountWithEmail(
+                  _emailcontroller.text,
+                  _passwordcontroller.text,
+                )
                     .then((value) {
                   if (value == "Account Created") {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -167,7 +209,7 @@ class _signuppageState extends State<signuppage> {
             },
             child: Text(
               "SignUp",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             )));
   }
 

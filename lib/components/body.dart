@@ -41,22 +41,23 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   }
 
   @override 
-void didChangeAppLifecycleState(AppLifecycleState state) {
-  super.didChangeAppLifecycleState(state);
-  print("App lifecycle state changed to: $state");
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print("App lifecycle state changed to: $state");
   
-  if (state == AppLifecycleState.resumed) {
-    setStatus("Online");
-  } else {
-    // Delaying the setting of status to offline to avoid flickering
-    setStatus("Offline");
-  }
+    if (state == AppLifecycleState.resumed) {
+      setStatus("Online",);
+    } else {
+      // Delaying the setting of status to offline to avoid flickering
+      setStatus("Offline");
+    }
 }
 
   @override
   void dispose() {
-    _searchfocusNode.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    _searchfocusNode.dispose();
+    
 
     super.dispose();
   }

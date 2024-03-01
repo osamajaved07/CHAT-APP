@@ -119,6 +119,7 @@ class ChatRoom extends StatelessWidget {
   final TextEditingController _message = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  
 
   File? imageFile;
 
@@ -206,31 +207,36 @@ class ChatRoom extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: StreamBuilder<DocumentSnapshot>(
-  stream: FirebaseFirestore.instance
-      .collection("users")
-      .doc(userMap['uid'])
-      .snapshots(),
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return CircularProgressIndicator();
-    } else if (snapshot.hasError) {
-      return Text('Error: ${snapshot.error}');
-    } else if (snapshot.hasData && snapshot.data!.exists) {
-      String status = snapshot.data!["status"];
-      return Column(
-        children: [
-          Text(userMap['email']),
-          Text(
-            status, // Display user status in app bar
-            style: TextStyle(fontSize: 14),
-          ),
-        ],
-      );
-    } else {
-      return Text('Document does not exist'); // Placeholder text for missing document
-    }
-  },
-),
+          stream: FirebaseFirestore.instance
+              .collection("users")
+              .doc(userMap['uid'])
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData && snapshot.data!.exists) {
+              String status = snapshot.data!["status"];
+              return Column(
+                children: [
+                  Text(userMap['email']),
+                  Text(
+                    status, // Display user status in app bar
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: status == 'Online' ? Color.fromARGB(255, 0, 255, 8) : Colors.black,
+                      fontWeight: status == 'Online' ? FontWeight.bold : FontWeight.normal,),
+                    
+                  ),
+                ],
+              );
+            } else {
+              return Text(
+                  'Document does not exist'); // Placeholder text for missing document
+            }
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
