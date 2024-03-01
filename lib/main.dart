@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, camel_case_types, unused_import
+// ignore_for_file: prefer_const_constructors, camel_case_types, unused_import, use_key_in_widget_constructors
 
 import 'package:chat_application/constants.dart';
 import 'package:chat_application/controller/auth_controller.dart';
@@ -12,6 +12,7 @@ import 'package:chat_application/screens/message_screen.dart';
 import 'package:chat_application/screens/signuppage.dart';
 
 import 'package:chat_application/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,3 +85,4 @@ class _checkuserState extends State<checkuser> {
     );
   }
 }
+

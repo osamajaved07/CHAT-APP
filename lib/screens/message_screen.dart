@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class MessagesScreen extends StatelessWidget {
   const MessagesScreen({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class MessagesScreen extends StatelessWidget {
 
 class mainBody extends StatelessWidget {
   const mainBody({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +98,10 @@ class mainBody extends StatelessWidget {
 
 
 class ChatInputField extends StatelessWidget {
-  const ChatInputField({
+   ChatInputField({
     super.key,
   });
+  final TextEditingController _message = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +148,10 @@ class ChatInputField extends StatelessWidget {
     
                 SizedBox(width: kDefaultPadding / 4,),
     
-                Expanded(child: TextField(
+                Expanded(
+                  child: TextField(
+                    controller: _message,
+
                   decoration: InputDecoration(
                     hintText: "Type message",
                     border: InputBorder.none

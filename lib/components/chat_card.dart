@@ -37,7 +37,7 @@ class ChatCard extends StatelessWidget {
                     height: 16,
                     width: 16,
                     decoration: BoxDecoration(
-                      color: kPrimaryColor,
+                      color: Colors.green,
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Theme.of(context).scaffoldBackgroundColor,

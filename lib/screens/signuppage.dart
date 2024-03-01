@@ -17,6 +17,7 @@ class _signuppageState extends State<signuppage> {
   bool isPasswordVisible = false;
   TextEditingController _emailcontroller = TextEditingController();
   TextEditingController _passwordcontroller = TextEditingController();
+  TextEditingController _namecontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,9 +143,9 @@ class _signuppageState extends State<signuppage> {
         child: ElevatedButton(
             onPressed: () {
               if (formkey.currentState!.validate()) {
-                AuthService()
-                    .createAccountWithEmail(
-                        _emailcontroller.text, _passwordcontroller.text,)
+                
+                    AuthService().createAccountWithEmail(
+                        _emailcontroller.text, _passwordcontroller.text, )
                     .then((value) {
                   if (value == "Account Created") {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
