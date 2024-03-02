@@ -32,6 +32,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
     setStatus("Online");
   }
 
+
   void setStatus(String status) async {
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
       "status": status,
@@ -79,7 +80,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
     try {
       final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .where("email", isEqualTo: _search.text)
+          .where("name", isEqualTo: _search.text)
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
@@ -181,7 +182,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                     ),
                     onTap: () {
                       String roomId = chatRoomId(
-                          _auth.currentUser!.email!, userMap!['email']);
+                          _auth.currentUser!.displayName!, userMap!['name']);
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -192,7 +193,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                         ),
                       );
                     },
-                    title: Text(userMap!['email']),
+                    title: Text(userMap!['name']),
                   ) // Show user email if found
                 : Expanded(
                     child: ListView.builder(

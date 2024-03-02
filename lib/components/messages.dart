@@ -220,7 +220,7 @@ class ChatRoom extends StatelessWidget {
               String status = snapshot.data!["status"];
               return Column(
                 children: [
-                  Text(userMap['email']),
+                  Text(userMap['name']),
                   Text(
                     status, // Display user status in app bar
                     style: TextStyle(

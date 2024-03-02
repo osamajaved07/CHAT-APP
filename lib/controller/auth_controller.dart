@@ -32,7 +32,7 @@ class AuthService {
           'uid': user.uid,
         });
       }
-      user!.updateProfile(displayName: email);
+      await user!.updateProfile(displayName: name);
 
       return "Account Created";
 

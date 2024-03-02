@@ -58,12 +58,12 @@ class _signuppageState extends State<signuppage> {
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
-
                   color: Color.fromARGB(168, 255, 255, 255)),
               child: SingleChildScrollView(
                 child: Container(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20,top: 18),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 18),
                     child: Form(
                       key: formkey,
                       child: Column(
@@ -186,10 +186,9 @@ class _signuppageState extends State<signuppage> {
               if (formkey.currentState!.validate()) {
                 AuthService()
                     .createAccountWithEmail(
-                  _emailcontroller.text,
-                  _passwordcontroller.text,
-                  _namecontroller.text
-                )
+                        _namecontroller.text, // Pass the name
+                        _emailcontroller.text, // Pass the email
+                        _passwordcontroller.text)
                     .then((value) {
                   if (value == "Account Created") {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -296,17 +295,18 @@ class _signuppageState extends State<signuppage> {
             ),
           ),
           SizedBox(width: 8),
-          Flexible(
-            child: TextFormField(
-              keyboardType: TextInputType.name,
-              decoration: InputDecoration(
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                labelText: 'LastName',
-                hintText: 'Doe',
-              ),
-            ),
-          ),
+          // Flexible(
+          //   child: TextFormField(
+          //     controller: _namecontroller,
+          //     keyboardType: TextInputType.name,
+          //     decoration: InputDecoration(
+          //       border:
+          //           OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+          //       labelText: 'LastName',
+          //       hintText: 'Doe',
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
