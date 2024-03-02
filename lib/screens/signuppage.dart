@@ -58,6 +58,7 @@ class _signuppageState extends State<signuppage> {
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
+
                   color: Color.fromARGB(168, 255, 255, 255)),
               child: SingleChildScrollView(
                 child: Container(
@@ -187,6 +188,7 @@ class _signuppageState extends State<signuppage> {
                     .createAccountWithEmail(
                   _emailcontroller.text,
                   _passwordcontroller.text,
+                  _namecontroller.text
                 )
                     .then((value) {
                   if (value == "Account Created") {
@@ -277,6 +279,7 @@ class _signuppageState extends State<signuppage> {
         children: [
           Flexible(
             child: TextFormField(
+              controller: _namecontroller,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {

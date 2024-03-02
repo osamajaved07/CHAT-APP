@@ -31,36 +31,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addObserver(this);
-  //   setStatus("Online");
-  // }
-
-  // void setStatus(String status) async {
-  //   await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
-  //     "status": status,
-      
-  //   });
-  //   print("Status Updated");
-  // }
-
-//   @override 
-// void didChangeAppLifecycleState(AppLifecycleState state) {
-//   super.didChangeAppLifecycleState(state);
-//   print("App lifecycle state changed to: $state");
-  
-//   if (state == AppLifecycleState.resumed) {
-//     setStatus("Online");
-//   } else {
-//     // Delaying the setting of status to offline to avoid flickering
-//     setStatus("Offline");
-//   }
-// }
-
-
-
   void onSearch() async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     setState(() {
@@ -155,10 +125,21 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               height: 8,
                             ),
                             if (FirebaseAuth.instance.currentUser != null)
-                              Text(
-                                FirebaseAuth.instance.currentUser!.email
-                                    .toString(),
-                                style: TextStyle(fontSize: 18),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Email:",
+                                    style: TextStyle(
+                                      fontSize: 18, 
+                                      fontWeight: FontWeight.bold
+                                      ),),
+                                      SizedBox(width: 4,),
+                                  Text(
+                                    FirebaseAuth.instance.currentUser!.email
+                                        .toString(),
+                                    style: TextStyle(fontSize: 18, ),
+                                  ),
+                                ],
                               ), // Check and use only if currentUser is not null
                           ],
                         ),
