@@ -6,7 +6,7 @@ Chat app (both frontend and backend) created with **flutter and firebase**.
 **Show your support by starring the repository ⭐️**
 
 ## Features
-**<span style="color:red">Empowering Connections:</span>**
+**Empowering Connections:**
 
 Chatify revolutionizes the way you communicate, offering seamless user authentication powered by Firebase. Whether you're connecting with friends, family, or colleagues, Chatify ensures a secure and reliable platform for your conversations.
 
