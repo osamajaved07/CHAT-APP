@@ -43,11 +43,11 @@ With Chatify, staying connected has never been easier. Download the app now and 
   </tr>  
   <tr>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/03d395fc-7f90-4f57-9425-93b766ea5e3c" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/7da5ea01-ad97-4633-8bd1-9c3865308022" alt="ss1" width="200"/>
       <p>Chat Screen from User1 side.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/9e08181f-7bf8-4f63-a335-031a9b9ccc0f" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/595da9ac-3525-42a4-a13a-16205ae84219" alt="ss1" width="200"/>
       <p>Chat Screen from User2 side.</p>
     </td>
     <td align="center">
