@@ -119,7 +119,6 @@ class ChatRoom extends StatelessWidget {
   final TextEditingController _message = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  
 
   File? imageFile;
 
@@ -144,7 +143,7 @@ class ChatRoom extends StatelessWidget {
         .collection('chats')
         .doc(fileName)
         .set({
-      "sendby": _auth.currentUser!.email,
+      "sendby": _auth.currentUser!.displayName,
       "message": "",
       "type": "img",
       "time": FieldValue.serverTimestamp(),
@@ -181,7 +180,7 @@ class ChatRoom extends StatelessWidget {
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> messages = {
-        "sendby": _auth.currentUser!.email,
+        "sendby": _auth.currentUser!.displayName,
         "message": _message.text,
         "type": "text",
         "time": FieldValue.serverTimestamp(),
@@ -225,9 +224,13 @@ class ChatRoom extends StatelessWidget {
                     status, // Display user status in app bar
                     style: TextStyle(
                       fontSize: 14,
-                      color: status == 'Online' ? Color.fromARGB(255, 0, 255, 8) : Colors.black,
-                      fontWeight: status == 'Online' ? FontWeight.bold : FontWeight.normal,),
-                    
+                      color: status == 'Online'
+                          ? Color.fromARGB(255, 0, 255, 8)
+                          : Colors.black,
+                      fontWeight: status == 'Online'
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
                   ),
                 ],
               );
@@ -341,7 +344,7 @@ class ChatRoom extends StatelessWidget {
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => ShowImage(
-                    imageUrl: map['mess age'],
+                    imageUrl: map['message'],
                   ),
                 ),
               ),

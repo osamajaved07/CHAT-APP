@@ -32,33 +32,32 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
     setStatus("Online");
   }
 
-
   void setStatus(String status) async {
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
       "status": status,
-      
-    }); 
+    });
     print("Status Updated");
   }
 
-  @override 
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     print("App lifecycle state changed to: $state");
-  
+
     if (state == AppLifecycleState.resumed) {
-      setStatus("Online",);
+      setStatus(
+        "Online",
+      );
     } else {
       // Delaying the setting of status to offline to avoid flickering
       setStatus("Offline");
     }
-}
+  }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _searchfocusNode.dispose();
-    
 
     super.dispose();
   }
@@ -172,29 +171,29 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
             ? CircularProgressIndicator() // Show loading indicator
             : userMap != null
                 ? ListTile(
-                    leading: Icon(
-                      Icons.account_box_outlined,
-                      color: Colors.black,
-                    ),
-                    trailing: Icon(
-                      Icons.chat,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      String roomId = chatRoomId(
-                          _auth.currentUser!.displayName!, userMap!['name']);
-
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => ChatRoom(
-                            chatRoomId: roomId,
-                            userMap: userMap!,
-                          ),
+                  leading: Icon(
+                    Icons.account_box_outlined,
+                    color: Colors.black,
+                  ),
+                  trailing: Icon(
+                    Icons.chat,
+                    color: Colors.black,
+                  ),
+                  onTap: () {
+                    String roomId = chatRoomId(
+                        _auth.currentUser!.displayName!, userMap!['name']);
+                                  
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ChatRoom(
+                          chatRoomId: roomId,
+                          userMap: userMap!,
                         ),
-                      );
-                    },
-                    title: Text(userMap!['name']),
-                  ) // Show user email if found
+                      ),
+                    );
+                  },
+                  title: Text(userMap!['name']),
+                ) // Show user email if found
                 : Expanded(
                     child: ListView.builder(
                       itemCount: chatsData.length,
@@ -212,6 +211,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                       ),
                     ),
                   ),
+                  
       ],
     );
   }

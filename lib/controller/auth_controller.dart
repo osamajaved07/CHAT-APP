@@ -15,18 +15,20 @@ class AuthService {
     });
     print("Status Updated to $status");
   }
-  Future<String> createAccountWithEmail(String name, String email, String password) async {
+
+  Future<String> createAccountWithEmail(
+      String name, String email, String password) async {
     // FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword( email: email, password: password);
+          .createUserWithEmailAndPassword(email: email, password: password);
       // After creating the account, save user data in Firestore
       User? user = FirebaseAuth.instance.currentUser;
 
       if (user != null) {
         await _firestore.collection('users').doc(user.uid).set({
-          'name' : name,
+          'name': name,
           'email': email,
           'status': 'Online',
           'uid': user.uid,
@@ -42,16 +44,12 @@ class AuthService {
     }
   }
 
-
   Future<String> loginWithEmail(String email, String password) async {
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-            email: email,
-            password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
       await updateUserStatus('Online');
 
-           
       return "Login Successfully";
     } on FirebaseAuthException catch (e) {
       return e.message.toString();

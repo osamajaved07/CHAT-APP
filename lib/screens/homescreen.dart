@@ -66,10 +66,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           : Body(),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
+        
+      tooltip: "Groups",
         backgroundColor: kPrimaryColor,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, "/GroupChatHomeScreen");
+        },
         child: Icon(
-          Icons.person_add_alt_1,
+          Icons.group_add_rounded,
           color: Colors.white,
         ),
       ),
@@ -103,6 +107,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         title: Text('Profile'),
                       ),
                       body: Center(
+                        
                         child: Column(
                           children: [
                             Container(
@@ -112,14 +117,39 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 null) // Check if currentUser is not null
                               CircleAvatar(
                                 backgroundColor: Colors.deepPurple[100],
-                                maxRadius: 32,
+                                maxRadius: 36,
                                 child: Text(
-                                  FirebaseAuth.instance.currentUser!.email
-                                      .toString()[0]
+                                  FirebaseAuth.instance.currentUser!.displayName
+                                      .toString()
                                       .toUpperCase(),
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black),
+                                      fontSize: 14, color: Colors.black),
                                 ),
+                              ),
+                              SizedBox(
+                              height: 18,
+                            ),
+                            if (FirebaseAuth.instance.currentUser != null)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "UserName:",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    FirebaseAuth.instance.currentUser!.displayName
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
                               ),
                             SizedBox(
                               height: 8,
@@ -128,16 +158,21 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Email:",
+                                  Text(
+                                    "Email:",
                                     style: TextStyle(
-                                      fontSize: 18, 
-                                      fontWeight: FontWeight.bold
-                                      ),),
-                                      SizedBox(width: 4,),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
                                   Text(
                                     FirebaseAuth.instance.currentUser!.email
                                         .toString(),
-                                    style: TextStyle(fontSize: 18, ),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
                                   ),
                                 ],
                               ), // Check and use only if currentUser is not null

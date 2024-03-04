@@ -3,7 +3,8 @@
 import 'package:chat_application/constants.dart';
 import 'package:chat_application/controller/auth_controller.dart';
 import 'package:chat_application/firebase_options.dart';
-
+import 'package:chat_application/model/group_chat/group_chat_room.dart';
+import 'package:chat_application/model/group_chat/group_chat_screen.dart';
 
 import 'package:chat_application/screens/forgot_password_page.dart';
 import 'package:chat_application/screens/homescreen.dart';
@@ -21,7 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   runApp(const MyApp());
 }
 
@@ -36,20 +37,17 @@ class MyApp extends StatelessWidget {
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
       themeMode: ThemeMode.light,
-
-      
-      
       debugShowCheckedModeBanner: false,
-
       routes: {
         "/signup": (context) => signuppage(),
         "/login": (context) => loginpage(),
         "/home": (context) => HomePage(),
         "/": (context) => checkuser(),
         "/forgotpassword": (context) => ForgotPasswordPage(),
-        "/messagescreen" : (context) => MessagesScreen(),
+        "/messagescreen": (context) => MessagesScreen(),
+        "/GroupChatHomeScreen" : (context) => GroupChatHomeScreen(),
+        "/GroupChatRoom" : (context) => GroupChatRoom(),
       },
-      
     );
   }
 }
@@ -62,27 +60,23 @@ class checkuser extends StatefulWidget {
 }
 
 class _checkuserState extends State<checkuser> {
-
   @override
   void initState() {
     AuthService().isLoogedIn().then((value) {
-      if(value){
+      if (value) {
         Navigator.pushReplacementNamed(context, '/home');
-      }
-      else{
+      } else {
         Navigator.pushReplacementNamed(context, '/login');
-
       }
-
     });
-    // 
+    //
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child:CircularProgressIndicator() ,
+      child: CircularProgressIndicator(),
     );
   }
 }
-
