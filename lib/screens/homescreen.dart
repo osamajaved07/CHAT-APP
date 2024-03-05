@@ -5,6 +5,7 @@ import 'package:chat_application/constants.dart';
 import 'package:chat_application/controller/auth_controller.dart';
 import 'package:chat_application/main.dart';
 import 'package:chat_application/model/Chat.dart';
+import 'package:chat_application/model/group_chat/group_chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late Map<String, dynamic> userMap;
   bool isLoading = false;
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   final formkey = GlobalKey<FormState>();
 
@@ -66,14 +67,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           : Body(),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
-        
-      tooltip: "Groups",
+        tooltip: "Groups",
         backgroundColor: kPrimaryColor,
         onPressed: () {
           Navigator.pushNamed(context, "/GroupChatHomeScreen");
         },
         child: Icon(
-          Icons.group_add_rounded,
+          Icons.group,
           color: Colors.white,
         ),
       ),
@@ -91,8 +91,25 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         });
       },
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "chats"),
-        BottomNavigationBarItem(icon: Icon(Icons.people), label: "People"),
+        BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
+        BottomNavigationBarItem(
+            icon: Column(
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Adjust this property as needed
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/GroupChatHomeScreen");
+                  },
+                  icon: Icon(Icons.group),
+                ),
+                Text("Groups", style: TextStyle(
+                  fontSize: 13,
+                  color: Color.fromARGB(255, 176, 176, 176)
+                ),), // Your label
+              ],
+            ),
+            label: ""),
         BottomNavigationBarItem(icon: Icon(Icons.call), label: "Calls"),
         BottomNavigationBarItem(
           icon: IconButton(
@@ -107,7 +124,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         title: Text('Profile'),
                       ),
                       body: Center(
-                        
                         child: Column(
                           children: [
                             Container(
@@ -126,7 +142,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       fontSize: 14, color: Colors.black),
                                 ),
                               ),
-                              SizedBox(
+                            SizedBox(
                               height: 18,
                             ),
                             if (FirebaseAuth.instance.currentUser != null)
@@ -143,7 +159,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                     width: 4,
                                   ),
                                   Text(
-                                    FirebaseAuth.instance.currentUser!.displayName
+                                    FirebaseAuth
+                                        .instance.currentUser!.displayName
                                         .toString(),
                                     style: TextStyle(
                                       fontSize: 18,

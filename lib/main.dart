@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         "/forgotpassword": (context) => ForgotPasswordPage(),
         "/messagescreen": (context) => MessagesScreen(),
         "/GroupChatHomeScreen" : (context) => GroupChatHomeScreen(),
-        "/GroupChatRoom" : (context) => GroupChatRoom(),
+        "/GroupChatRoom" : (context) => GroupChatRoom(groupName: '', groupChatId: '',),
       },
     );
   }

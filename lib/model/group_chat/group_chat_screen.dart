@@ -1,40 +1,99 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, sort_child_properties_last, avoid_types_as_parameter_names, unused_local_variable, unused_import
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:chat_application/constants.dart';
+
+import 'package:chat_application/model/group_chat/create_group/add_members.dart';
+import 'package:chat_application/model/group_chat/group_chat_room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class GroupChatHomeScreen extends StatefulWidget {
-  const GroupChatHomeScreen({super.key});
+  
+  const GroupChatHomeScreen(
+      {Key? key,})
+      : super(key: key);
 
   @override
-  State<GroupChatHomeScreen> createState() => _GroupChatHomeScreenState();
+  _GroupChatHomeScreenState createState() => _GroupChatHomeScreenState();
 }
 
 class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
-  @override
+  List membersList = [];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isLoading = true;
 
+  List groupList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAvailableGroups();
+  }
+
+  void getAvailableGroups() async {
+    String uid = _auth.currentUser!.uid;
+
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('groups')
+        .get()
+        .then((value) {
+      setState(() {
+        groupList = value.docs;
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: Text("Groups"),
       ),
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, Index){
-        return ListTile(
-          onTap: (){
-            Navigator.pushNamed(context, "/GroupChatRoom");
-          },
-          leading: Icon(Icons.group),
-          title: Text("Group $Index"),
-        );
-      }),
-      floatingActionButton: FloatingActionButton(onPressed: (){},
-      child: Icon(Icons.create),
-      tooltip: "Create Group",),
-      );
+      body: isLoading
+          ? Container(
+              height: size.height,
+              width: size.width,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: groupList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => GroupChatRoom(
+                        groupName: groupList[index]['name'],
+                        groupChatId: groupList[index]['id'],
+                      ),
+                    ),
+                  ),
+                  leading: Icon(Icons.group),
+                  title: Text(groupList[index]['name']),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.create),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => AddMembersInGroup(
+              // groupChatId: widget.groupId,
+              // name: widget.groupName,
+              // membersList: membersList,
+            ),
+          ),
+        ),
+        tooltip: "Create Group",
+      ),
+    );
   }
 }

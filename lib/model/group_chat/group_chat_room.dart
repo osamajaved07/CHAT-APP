@@ -1,66 +1,94 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, unused_import
 
-import 'package:chat_application/constants.dart';
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
+import 'package:chat_application/model/group_chat/group_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class GroupChatRoom extends StatefulWidget {
-  const GroupChatRoom({super.key});
+import '../../constants.dart';
 
-  @override
-  State<GroupChatRoom> createState() => _GroupChatRoomState();
-}
+class GroupChatRoom extends StatelessWidget {
+  final String groupChatId, groupName;
 
-class _GroupChatRoomState extends State<GroupChatRoom> {
+  GroupChatRoom({required this.groupName, required this.groupChatId, Key? key})
+      : super(key: key);
 
-  String currentUserName  = 'User1';
   final TextEditingController _message = TextEditingController();
-   List<Map<String, dynamic>> dummyChatList = [
-    {
-      "message" : "Hello",
-      "sendBy" : "User1",
-      "type" : "text"
-    },
-    {
-      "message" : "Hello",
-      "sendBy" : "User4",
-      "type" : "text"
-    },
-    {
-      "message" : "Hello",
-      "sendBy" : "User9",
-      "type" : "text"
-    },
-    {
-      "message" : "Hello",
-      "sendBy" : "User3",
-      "type" : "text"
-    },
-  ];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void onSendMessage() async {
+    if (_message.text.isNotEmpty) {
+      Map<String, dynamic> chatData = {
+        "sendBy": _auth.currentUser!.displayName,
+        "message": _message.text,
+        "type": "text",
+        "time": FieldValue.serverTimestamp(),
+      };
+
+      _message.clear();
+
+      await _firestore
+          .collection('groups')
+          .doc(groupChatId)
+          .collection('chats')
+          .add(chatData);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text("Group Name"),
+        title: Text(groupName),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.more_vert))
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => GroupInfo(
+                        groupName: groupName,
+                        groupId: groupChatId,
+                      ),
+                    ),
+                  ),
+              icon: Icon(Icons.more_vert)),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               height: size.height / 1.27,
-              width: size.width ,
-              child: ListView.builder(
-                itemCount: dummyChatList.length,
-                itemBuilder: (context, index) {
-                  return messageTile(size,dummyChatList[index]);
-                }),
+              width: size.width,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _firestore
+                    .collection('groups')
+                    .doc(groupChatId)
+                    .collection('chats')
+                    .orderBy('time')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> chatMap =
+                            snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+
+                        return messageTile(size, chatMap);
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
+            ),
             Container(
               height: size.height / 10,
               width: size.width,
@@ -78,7 +106,7 @@ class _GroupChatRoomState extends State<GroupChatRoom> {
                         controller: _message,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
-                              onPressed: (){},
+                              onPressed: () {},
                               icon: Icon(Icons.photo),
                             ),
                             hintText: "Send Message",
@@ -88,7 +116,7 @@ class _GroupChatRoomState extends State<GroupChatRoom> {
                       ),
                     ),
                     IconButton(
-                        icon: Icon(Icons.send), onPressed: (){}),
+                        icon: Icon(Icons.send), onPressed: onSendMessage),
                   ],
                 ),
               ),
@@ -99,28 +127,84 @@ class _GroupChatRoomState extends State<GroupChatRoom> {
     );
   }
 
-  Widget messageTile (Size size, Map<String, dynamic> chatMap){
-    return Container(
-      width: size.width,
-      alignment: chatMap['sendBy'] == currentUserName ? Alignment.centerRight : Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width / 100,
-        vertical: size.height / 400
-      ),
-
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: size.height / 50,
-          horizontal: size.width / 40
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.blue,
-
-        ),
-        child: Text(chatMap['message']),
-      ),
-
-    );
+  Widget messageTile(Size size, Map<String, dynamic> chatMap) {
+    return Builder(builder: (_) {
+      if (chatMap['type'] == "text") {
+        return Container(
+          width: size.width,
+          alignment: chatMap['sendBy'] == _auth.currentUser!.displayName
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.blue,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    chatMap['sendBy'],
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height / 200,
+                  ),
+                  Text(
+                    chatMap['message'],
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              )),
+        );
+      } else if (chatMap['type'] == "img") {
+        return Container(
+          width: size.width,
+          alignment: chatMap['sendBy'] == _auth.currentUser!.displayName
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+            height: size.height / 2,
+            child: Image.network(
+              chatMap['message'],
+            ),
+          ),
+        );
+      } else if (chatMap['type'] == "notify") {
+        return Container(
+          width: size.width,
+          alignment: Alignment.center,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.black38,
+            ),
+            child: Text(
+              chatMap['message'],
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      } else {
+        return SizedBox();
+      }
+    });
   }
 }
