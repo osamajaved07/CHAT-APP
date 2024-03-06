@@ -37,7 +37,7 @@ With Chatify, staying connected has never been easier. Download the app now and 
       <p>SignUp Screen</p>
     </td>
      <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/4b12e6ad-c186-4e39-8e06-f2ee48dfae6a" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/b0cfe8fd-702f-4463-a56a-6c8635445fa3" alt="ss1" width="200"/>
       <p>Home Screen</p>
     </td>
   </tr>  
@@ -51,12 +51,30 @@ With Chatify, staying connected has never been easier. Download the app now and 
       <p>Chat Screen from User2 side.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/637bb5ca-e306-45be-9e69-ef061ec871f1" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/c7fd9496-7a5b-4e71-ab00-e465f4f1ae33" alt="ss1" width="200"/>
       <p>Profile</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/79d20db7-8eee-473e-9805-56c54990bcdc" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/7d049374-ddaf-4369-924d-c430d5f0df83" alt="ss1" width="200"/>
       <p>Logout Confirmation</p>
+    </td>
+    </tr>   
+    <tr>
+    <td align="center">
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/f1b1e3a9-b349-4745-a409-ce270bc0a79a" alt="ss1" width="200"/>
+      <p>Group home screen.</p>
+    </td>
+    <td align="center">
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/ff70bdc0-3842-46ea-8140-40e8558fbeb6" alt="ss1" width="200"/>
+      <p>Create group screen.</p>
+    </td>
+    <td align="center">
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/a78f2754-da98-4578-8c57-60fe5ef486ad" alt="ss1" width="200"/>
+      <p>Group chat screen.</p>
+    </td>
+    <td align="center">
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/0f14aedd-8096-4fe5-94ca-74677dcc5b77" alt="ss1" width="200"/>
+      <p>Group information.</p>
     </td>
     </tr>   
 </table>
