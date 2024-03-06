@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields, prefer_const_constructors, sized_box_for_whitespace, avoid_print, avoid_function_literals_in_foreach_calls, avoid_unnecessary_containers, use_build_context_synchronously
 
 // import 'package:chat_application/model/group_chat/add_members.dart';
+import 'package:chat_application/constants.dart';
 import 'package:chat_application/model/group_chat/create_group/add_members.dart';
 import 'package:chat_application/screens/homescreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -131,6 +132,7 @@ class _GroupInfoState extends State<GroupInfo> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 229, 206, 255),
         body: isLoading
             ? Container(
                 height: size.height,

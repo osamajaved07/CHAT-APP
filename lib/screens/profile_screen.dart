@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:chat_application/constants.dart';
+import 'package:chat_application/model/group_chat/group_chat_screen.dart';
+import 'package:chat_application/screens/homescreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -91,14 +93,37 @@ class ProfileScreen extends StatelessWidget {
         items: <Widget>[
           IconButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, "/home");
+              Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 400),
+                pageBuilder: (_, __, ___) => HomePage(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+            );
             },
             icon: Icon(Icons.messenger),
             iconSize: 30,
           ),
           IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, "/GroupChatHomeScreen");
+            onPressed: () {Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 400),
+                pageBuilder: (_, __, ___) => GroupChatHomeScreen(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+            );
             },
             icon: Icon(Icons.group),
             iconSize: 30,

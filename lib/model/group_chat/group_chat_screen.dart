@@ -4,6 +4,8 @@ import 'package:chat_application/constants.dart';
 
 import 'package:chat_application/model/group_chat/create_group/add_members.dart';
 import 'package:chat_application/model/group_chat/group_chat_room.dart';
+import 'package:chat_application/screens/homescreen.dart';
+import 'package:chat_application/screens/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -106,7 +108,19 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
           items: <Widget>[
             IconButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/home");
+                Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 400),
+                pageBuilder: (_, __, ___) => HomePage(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+            );
               },
               icon: Icon(Icons.messenger),
               iconSize: 30,
@@ -115,7 +129,19 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
             Icon(Icons.call, size: 30),
             IconButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/ProfileScreen");
+                Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 400),
+                pageBuilder: (_, __, ___) => ProfileScreen(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+            );
               },
               icon: CircleAvatar(
                 radius: 14,

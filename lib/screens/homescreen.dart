@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names, sized_box_for_whitespace, await_only_futures, no_leading_underscores_for_local_identifiers, avoid_print, override_on_non_overriding_member
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names, sized_box_for_whitespace, await_only_futures, no_leading_underscores_for_local_identifiers, avoid_print, override_on_non_overriding_member, use_key_in_widget_constructors
 
 import 'package:chat_application/components/body.dart';
 import 'package:chat_application/constants.dart';
@@ -13,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -67,18 +67,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ),
             )
           : Body(),
-      // floatingActionButton: FloatingActionButton(
-      //   shape: CircleBorder(),
-      //   tooltip: "Groups",
-      //   backgroundColor: kPrimaryColor,
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, "/GroupChatHomeScreen");
-      //   },
-      //   child: Icon(
-      //     Icons.group,
-      //     color: Colors.white,
-      //   ),
-      // ),
       bottomNavigationBar: Bottomnavigationbar(),
     );
   }
@@ -95,7 +83,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Icon(Icons.messenger, size: 30),
         IconButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "/GroupChatHomeScreen");
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 400),
+                pageBuilder: (_, __, ___) => GroupChatHomeScreen(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+            );
           },
           icon: Icon(Icons.group),
           iconSize: 30,
@@ -106,7 +106,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         ),
         IconButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "/ProfileScreen");
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 400),
+                pageBuilder: (_, __, ___) => ProfileScreen(),
+                transitionsBuilder: (_, animation, __, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+            );
           },
           icon: CircleAvatar(
             radius: 14,
@@ -125,35 +137,39 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       title: Text("Chats"),
       actions: [
         IconButton.outlined(
-            onPressed: () {
-              // AuthService().logout();
-              // Navigator.pushReplacementNamed(context, "/login");
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("Confirm Logout"),
-                      content: Text("Are you sure you want to logout?"),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text("Cancel")),
-                        TextButton(
-                            onPressed: () {
-                              AuthService().logout();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Logged Out...')));
-                              Navigator.pushReplacementNamed(context, '/login');
-                            },
-                            child: Text("Logout"))
-                      ],
-                    );
-                  });
-            },
-            icon: Icon(Icons.logout))
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Confirm Logout"),
+                  content: Text("Are you sure you want to logout?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("Cancel"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        AuthService().logout();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Logged Out...')),
+                        );
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: Text("Logout"),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: Icon(Icons.logout),
+        ),
       ],
     );
   }
 }
+
