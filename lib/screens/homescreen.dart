@@ -6,7 +6,9 @@ import 'package:chat_application/controller/auth_controller.dart';
 import 'package:chat_application/main.dart';
 import 'package:chat_application/model/Chat.dart';
 import 'package:chat_application/model/group_chat/group_chat_screen.dart';
+import 'package:chat_application/screens/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -65,149 +67,53 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ),
             )
           : Body(),
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        tooltip: "Groups",
-        backgroundColor: kPrimaryColor,
-        onPressed: () {
-          Navigator.pushNamed(context, "/GroupChatHomeScreen");
-        },
-        child: Icon(
-          Icons.group,
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   shape: CircleBorder(),
+      //   tooltip: "Groups",
+      //   backgroundColor: kPrimaryColor,
+      //   onPressed: () {
+      //     Navigator.pushNamed(context, "/GroupChatHomeScreen");
+      //   },
+      //   child: Icon(
+      //     Icons.group,
+      //     color: Colors.white,
+      //   ),
+      // ),
       bottomNavigationBar: Bottomnavigationbar(),
     );
   }
 
-  BottomNavigationBar Bottomnavigationbar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: _selectedIndex,
-      onTap: (value) {
-        setState(() {
-          _selectedIndex = value;
-        });
-      },
-      items: [
-        BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
-        BottomNavigationBarItem(
-            icon: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Adjust this property as needed
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/GroupChatHomeScreen");
-                  },
-                  icon: Icon(Icons.group),
-                ),
-                Text("Groups", style: TextStyle(
-                  fontSize: 13,
-                  color: Color.fromARGB(255, 176, 176, 176)
-                ),), // Your label
-              ],
-            ),
-            label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.call), label: "Calls"),
-        BottomNavigationBarItem(
-          icon: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Builder(
-                    builder: (scaffoldContext) => Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: kPrimaryColor,
-                        title: Text('Profile'),
-                      ),
-                      body: Center(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 30,
-                            ),
-                            if (FirebaseAuth.instance.currentUser !=
-                                null) // Check if currentUser is not null
-                              CircleAvatar(
-                                backgroundColor: Colors.deepPurple[100],
-                                maxRadius: 36,
-                                child: Text(
-                                  FirebaseAuth.instance.currentUser!.displayName
-                                      .toString()
-                                      .toUpperCase(),
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.black),
-                                ),
-                              ),
-                            SizedBox(
-                              height: 18,
-                            ),
-                            if (FirebaseAuth.instance.currentUser != null)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "UserName:",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    FirebaseAuth
-                                        .instance.currentUser!.displayName
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            if (FirebaseAuth.instance.currentUser != null)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Email:",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    FirebaseAuth.instance.currentUser!.email
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
-                              ), // Check and use only if currentUser is not null
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-            icon: CircleAvatar(
-              radius: 14,
-              backgroundImage: AssetImage("assets/images/user_2.png"),
-            ),
+  CurvedNavigationBar Bottomnavigationbar() {
+    return CurvedNavigationBar(
+      index: 0,
+      backgroundColor: Colors.white, // Background color
+      color: kPrimaryColor, // Button color
+      buttonBackgroundColor: kPrimaryColor,
+      // Active button color
+      height: 50,
+      items: <Widget>[
+        Icon(Icons.messenger, size: 30),
+        IconButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, "/GroupChatHomeScreen");
+          },
+          icon: Icon(Icons.group),
+          iconSize: 30,
+        ),
+        Icon(
+          Icons.call,
+          size: 30,
+        ),
+        IconButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, "/ProfileScreen");
+          },
+          icon: CircleAvatar(
+            radius: 14,
+            backgroundImage: AssetImage("assets/images/user_2.png"),
           ),
-          label: "Profile",
-        )
+          iconSize: 30,
+        ),
       ],
     );
   }
