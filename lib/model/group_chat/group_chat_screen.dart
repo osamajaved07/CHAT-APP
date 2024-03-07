@@ -57,7 +57,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Colors.blue.shade400,
           title: Text("Groups"),
         ),
         body: isLoading
@@ -100,7 +100,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
         bottomNavigationBar: CurvedNavigationBar(
           index: 1,
           backgroundColor: Colors.white, // Background color
-          color: kPrimaryColor, // Button color
+          color: Colors.blue.shade400, // Button color
           buttonBackgroundColor: kPrimaryColor,
 
           // Active button color

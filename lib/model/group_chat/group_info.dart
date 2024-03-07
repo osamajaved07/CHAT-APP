@@ -132,7 +132,7 @@ class _GroupInfoState extends State<GroupInfo> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 229, 206, 255),
+        backgroundColor: Colors.blue.shade50,
         body: isLoading
             ? Container(
                 height: size.height,

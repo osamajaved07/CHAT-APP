@@ -61,6 +61,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       body: isLoading
           ? Center(
               child: Container(
+                alignment: Alignment.center,
                 height: size.height / 20,
                 width: size.width / 20,
                 child: CircularProgressIndicator(),
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return CurvedNavigationBar(
       index: 0,
       backgroundColor: Colors.white, // Background color
-      color: kPrimaryColor, // Button color
+      color: Colors.blue.shade400, // Button color
       buttonBackgroundColor: kPrimaryColor,
       // Active button color
       height: 50,
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   AppBar App_Bar() {
     return AppBar(
-      backgroundColor: kPrimaryColor,
+      backgroundColor:Colors.blue.shade400,
       automaticallyImplyLeading: false,
       title: Text("Chats"),
       actions: [

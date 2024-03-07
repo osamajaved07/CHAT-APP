@@ -43,7 +43,7 @@ class GroupChatRoom extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Colors.blue.shade400,
         title: Text(groupName),
         actions: [
           IconButton(

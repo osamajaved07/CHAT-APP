@@ -120,7 +120,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
         Container(
           padding: EdgeInsets.fromLTRB(
               kDefaultPadding, 0, kDefaultPadding, kDefaultPadding),
-          color: kPrimaryColor,
+          color: Colors.blue.shade400,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

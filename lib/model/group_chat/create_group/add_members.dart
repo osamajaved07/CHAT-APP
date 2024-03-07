@@ -50,7 +50,7 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
 
     await _firestore
         .collection('users')
-        .where("email", isEqualTo: _search.text)
+        .where("name", isEqualTo: _search.text)
         .get()
         .then((value) {
       setState(() {
@@ -98,7 +98,7 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor:Colors.blue.shade400,
         title: Text("Add Members"),
       ),
       body: SingleChildScrollView(
