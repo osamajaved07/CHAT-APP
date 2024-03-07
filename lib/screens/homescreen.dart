@@ -100,10 +100,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           icon: Icon(Icons.group),
           iconSize: 30,
         ),
-        Icon(
-          Icons.call,
-          size: 30,
-        ),
+        // Icon(
+        //   Icons.call,
+        //   size: 30,
+        // ),
         IconButton(
           onPressed: () {
             Navigator.pushReplacement(

@@ -126,7 +126,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
               iconSize: 30,
             ),
             Icon(Icons.group, size: 30),
-            Icon(Icons.call, size: 30),
+            // Icon(Icons.call, size: 30),
             IconButton(
               onPressed: () {
                 Navigator.pushReplacement(

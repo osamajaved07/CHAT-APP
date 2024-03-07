@@ -84,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        index: 3,
+        index: 2,
         backgroundColor: Colors.white, // Background color
         color: kPrimaryColor, // Button color
         buttonBackgroundColor: kPrimaryColor,
@@ -128,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
             icon: Icon(Icons.group),
             iconSize: 30,
           ),
-          Icon(Icons.phone, size: 30),
+          // Icon(Icons.phone, size: 30),
           CircleAvatar(
             radius: 14,
             backgroundImage: AssetImage("assets/images/user_2.png"),

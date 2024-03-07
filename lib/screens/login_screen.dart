@@ -63,10 +63,7 @@ class _loginpageState extends State<loginpage> {
                     child: Form(
                       key: formkey,
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Image.asset('assets/images/login.png', width: 250,height: 250,),
-
                           Text(
                             'LOGIN',
                             style: GoogleFonts.lora(
@@ -81,34 +78,25 @@ class _loginpageState extends State<loginpage> {
                                 fontWeight: FontWeight.w200,
                                 color: Colors.black45),
                           ),
-
                           SizedBox(
                             height: 20,
                           ),
-
                           emailfield1(),
-
                           SizedBox(
                             height: 20,
                           ),
-
                           passwordfield1(),
                           SizedBox(
                             height: 32,
                           ),
-
                           _loginbutton(context),
-
                           SizedBox(
                             height: 20,
                           ),
-
                           googleloginbutton1(context),
-
                           SizedBox(
                             height: 20,
                           ),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -204,7 +192,6 @@ class _loginpageState extends State<loginpage> {
                         style: TextStyle(
                           color: Colors.white,
                         ),
-                        
                       ),
                       backgroundColor: Colors.red.shade400,
                     ));

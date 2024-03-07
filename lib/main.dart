@@ -8,10 +8,10 @@ import 'package:chat_application/model/group_chat/group_chat_screen.dart';
 
 import 'package:chat_application/screens/forgot_password_page.dart';
 import 'package:chat_application/screens/homescreen.dart';
-import 'package:chat_application/screens/loginpage.dart';
+import 'package:chat_application/screens/login_screen.dart';
 import 'package:chat_application/screens/message_screen.dart';
 import 'package:chat_application/screens/profile_screen.dart';
-import 'package:chat_application/screens/signuppage.dart';
+import 'package:chat_application/screens/signup_screen.dart';
 
 import 'package:chat_application/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
