@@ -29,51 +29,51 @@ With Chatify, staying connected has never been easier. Download the app now and 
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/c57c93a9-3226-42fb-850c-b7fd0da1a1c4" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/6cc32057-e659-4af6-8561-08dbfaa4bcb5" alt="ss1" width="200"/>
       <p>Login Screen</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/b47e1ba2-7b95-4f16-9dd7-ff1004b761f6" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/ed085826-57d7-4210-862c-dbb95f6799cb" alt="ss1" width="200"/>
       <p>SignUp Screen</p>
     </td>
      <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/b0cfe8fd-702f-4463-a56a-6c8635445fa3" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/f611c8f6-f30b-454d-a6fc-c898440bb221" alt="ss1" width="200"/>
       <p>Home Screen</p>
     </td>
   </tr>  
   <tr>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/7da5ea01-ad97-4633-8bd1-9c3865308022" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/607e206a-e807-4697-9ae5-960aad60f5e1" alt="ss1" width="200"/>
       <p>Chat Screen from User1 side.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/595da9ac-3525-42a4-a13a-16205ae84219" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/036572de-e90b-4aff-bc9b-7874eadff98e" alt="ss1" width="200"/>
       <p>Chat Screen from User2 side.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/c7fd9496-7a5b-4e71-ab00-e465f4f1ae33" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/83c25304-0551-492e-88b1-6169bb413359" alt="ss1" width="200"/>
       <p>Profile</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/7d049374-ddaf-4369-924d-c430d5f0df83" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/f09e2d5a-746e-49d2-b696-888230a9faf9" alt="ss1" width="200"/>
       <p>Logout Confirmation</p>
     </td>
     </tr>   
     <tr>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/f1b1e3a9-b349-4745-a409-ce270bc0a79a" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/7e1fb4ec-4c26-49b1-8b7e-53b33407de9b" alt="ss1" width="200"/>
       <p>Group home screen.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/ff70bdc0-3842-46ea-8140-40e8558fbeb6" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/f5154a10-059c-44a7-9113-a0adb5e8911b" alt="ss1" width="200"/>
       <p>Create group screen.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/a78f2754-da98-4578-8c57-60fe5ef486ad" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/ced17ea6-940d-4aad-8a6c-85690ed77d1e" alt="ss1" width="200"/>
       <p>Group chat screen.</p>
     </td>
     <td align="center">
-      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/0f14aedd-8096-4fe5-94ca-74677dcc5b77" alt="ss1" width="200"/>
+      <img src="https://github.com/osamajaved07/CHAT-APP/assets/143210389/a25b5413-2f7f-4590-9a4d-c74fbcee8ffa" alt="ss1" width="200"/>
       <p>Group information.</p>
     </td>
     </tr>   
