@@ -23,7 +23,7 @@ class MessagesScreen extends StatelessWidget {
   AppBar Appbar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.blue.shade400,
       title: Row(
         children: [
           BackButton(),

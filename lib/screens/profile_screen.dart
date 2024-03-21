@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_print, use_build_context_synchronously, must_be_immutable, non_constant_identifier_names, unused_local_variable, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_print, use_build_context_synchronously, must_be_immutable, non_constant_identifier_names, unused_local_variable, prefer_const_constructors_in_immutables, unused_import
 
 import 'package:chat_application/constants.dart';
 import 'package:chat_application/model/group_chat/group_chat_screen.dart';
+import 'package:chat_application/model/phone_auth/otp_verify.dart';
 import 'package:chat_application/screens/homescreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -57,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             if (FirebaseAuth.instance.currentUser != null)
               Text(
-                "UserName: $_username",
+                "Username: $_username",
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -153,7 +154,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       });
                 },
                 child: Text('Update Profile'),
-              ), // Check and use only if currentUser is not null
+              ),
+            SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/PhoneAuth');
+                },
+                child: Text("Add phone number"))
           ],
         ),
       ),

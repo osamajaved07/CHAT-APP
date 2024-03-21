@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names, sized_box_for_whitespace, await_only_futures, no_leading_underscores_for_local_identifiers, avoid_print, override_on_non_overriding_member, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, unused_field, unused_import, non_constant_identifier_names, sized_box_for_whitespace, await_only_futures, no_leading_underscores_for_local_identifiers, avoid_print, override_on_non_overriding_member, use_key_in_widget_constructors, use_build_context_synchronously, unused_element
 
 import 'package:chat_application/components/body.dart';
+import 'package:chat_application/components/messages.dart';
 import 'package:chat_application/constants.dart';
 import 'package:chat_application/controller/auth_controller.dart';
 import 'package:chat_application/main.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  
   late Map<String, dynamic> userMap;
   bool isLoading = false;
 
@@ -34,29 +36,74 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  void onSearch() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    setState(() {
-      isLoading = true;
-    });
-    await _firestore
+void onSearch() async {
+  setState(() {
+    isLoading = true;
+  });
+
+  try {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .where("email", isEqualTo: _search.text)
-        .get()
-        .then((value) {
+        .where("name", isEqualTo: _search.text)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
       setState(() {
-        userMap = value.docs[0].data();
+        userMap = querySnapshot.docs[0].data() as Map<String, dynamic>;
         isLoading = false;
       });
       print(userMap);
+
+      // Create a new chat room
+      String roomId = createChatRoomId(_auth.currentUser!.uid, userMap!['uid']);
+
+      // Navigate to the chat room
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ChatRoom(chatRoomId: roomId, userMap: userMap!,),
+        ),
+      );
+    } else {
+      setState(() {
+        // userMap = null;
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: kSecondaryColor,
+          content: Text(
+            "User not found",
+            style: TextStyle(color: kContentColorLightTheme),
+          ),
+          duration: Duration(seconds: 4),
+        ),
+      );
+    }
+  } catch (e) {
+    setState(() {
+      isLoading = false;
     });
+    print("Error: $e");
   }
+}
+
+String createChatRoomId(String userId1, String userId2) {
+  List<String> userIds = [userId1, userId2];
+  userIds.sort();
+  return "${userIds[0]}_${userIds[1]}";
+}
+
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        _addChatUserDialog();
+
+      }, child: Icon(Icons.add_comment),),
       appBar: App_Bar(),
       body: isLoading
           ? Center(
@@ -70,6 +117,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           : Body(),
       bottomNavigationBar: Bottomnavigationbar(),
     );
+    
   }
 
   CurvedNavigationBar Bottomnavigationbar() {
@@ -172,5 +220,68 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ],
     );
   }
+    void _addChatUserDialog() {
+    // String name= '';
+
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              contentPadding: const EdgeInsets.only(
+                  left: 24, right: 24, top: 20, bottom: 10),
+
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+
+              //title
+              title: Row(
+                children: const [
+                  Icon(
+                    Icons.person_add,
+                    color: Colors.blue,
+                    size: 28,
+                  ),
+                  Text('  Add User')
+                ],
+              ),
+
+              //content
+              content: TextFormField(
+                controller: _search,
+                maxLines: 1,
+                // onChanged: (value) => name = value,
+                decoration: InputDecoration(
+                    hintText: 'Name',
+                    prefixIcon: const Icon(Icons.email, color: Colors.blue),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+
+              //actions
+              actions: [
+                //cancel button
+                MaterialButton(
+                    onPressed: () {
+                      //hide alert dialog
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel',
+                        style: TextStyle(color: Colors.blue, fontSize: 16))),
+
+                //add button
+                MaterialButton(
+                    onPressed: () {
+                      //hide alert dialog
+                      Navigator.pop(context);
+                      onSearch();
+                      
+                    },
+                    child: const Text(
+                      'Search',
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ))
+              ],
+            ));
+  }
+
 }
 

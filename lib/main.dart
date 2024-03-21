@@ -5,6 +5,8 @@ import 'package:chat_application/controller/auth_controller.dart';
 import 'package:chat_application/firebase_options.dart';
 import 'package:chat_application/model/group_chat/group_chat_room.dart';
 import 'package:chat_application/model/group_chat/group_chat_screen.dart';
+import 'package:chat_application/model/phone_auth/otp_verify.dart';
+import 'package:chat_application/model/phone_auth/phone_auth.dart';
 
 import 'package:chat_application/screens/forgot_password_page.dart';
 import 'package:chat_application/screens/homescreen.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
         "/messagescreen": (context) => MessagesScreen(),
         "/GroupChatHomeScreen": (context) => GroupChatHomeScreen(),
         "/ProfileScreen": (context) => ProfileScreen(),
+        "/OTP_Screen" : (context) => OTP_Screen(verificationid: "",),
+        "/PhoneAuth" : (context) => PhoneAuth(),
       },
     );
   }

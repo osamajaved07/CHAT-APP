@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, dead_code, unreachable_switch_case, sized_box_for_whitespace, deprecated_member_use, unused_element, unused_field, must_be_immutable, no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, body_might_complete_normally_catch_error, use_key_in_widget_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, dead_code, unreachable_switch_case, sized_box_for_whitespace, deprecated_member_use, unused_element, unused_field, must_be_immutable, no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, body_might_complete_normally_catch_error, use_key_in_widget_constructors, avoid_print, unused_import
 
 import "dart:io";
 
@@ -108,6 +108,10 @@ class MessageStatusDot extends StatelessWidget {
   }
 }
 
+
+
+
+
 // This is chat room code where you can with user through their emails
 
 class ChatRoom extends StatelessWidget {
@@ -204,7 +208,7 @@ class ChatRoom extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.deepPurple[50],
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Colors.blue.shade400,
         title: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection("users")

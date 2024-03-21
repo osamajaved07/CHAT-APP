@@ -1,9 +1,12 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, use_build_context_synchronously, unused_field, prefer_final_fields, override_on_non_overriding_member
+// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, use_build_context_synchronously, unused_field, prefer_final_fields, override_on_non_overriding_member, unused_import, unused_local_variable
+
+// import 'dart:html';
 
 import 'package:chat_application/components/chat_card.dart';
 import 'package:chat_application/components/filled_outline_button.dart';
 import 'package:chat_application/components/messages.dart';
 import 'package:chat_application/constants.dart';
+import 'package:chat_application/controller/chatroom_controller.dart';
 import 'package:chat_application/model/Chat.dart';
 import 'package:chat_application/screens/message_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +21,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> with WidgetsBindingObserver {
+  static FirebaseAuth auth = FirebaseAuth.instance;
+
+  // for accessing cloud firestore database
+  static FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+   static User get user => auth.currentUser!;
   Map<String, dynamic>? userMap;
   bool isLoading = false;
   final TextEditingController _search = TextEditingController();
@@ -25,11 +34,20 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+
+     static Stream<QuerySnapshot<Map<String, dynamic>>> getMyUsersId() {
+  return FirebaseFirestore.instance
+      .collection('chatroom')
+      .where('users', arrayContains: FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
+}
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     setStatus("Online");
+    // getMyUsersId();
   }
 
   void setStatus(String status) async {
@@ -69,6 +87,15 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
     } else {
       return "$user2$user1";
     }
+  }
+  // String chatRoomId(String user1, String user2) {
+  //   return user1.compareTo(user2) < 0 ? "$user1$user2" : "$user2$user1";
+  // }
+
+  String getChatRoomId(String user1, String user2) {
+    List<String> users = [user1, user2];
+    users.sort();
+    return "${users[0]}${users[1]}";
   }
 
   void onSearch() async {
@@ -171,48 +198,113 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
             ? CircularProgressIndicator() // Show loading indicator
             : userMap != null
                 ? ListTile(
-                  leading: Icon(
-                    Icons.account_box_outlined,
-                    color: Colors.black,
-                  ),
-                  trailing: Icon(
-                    Icons.chat,
-                    color: Colors.black,
-                  ),
-                  onTap: () {
-                    String roomId = chatRoomId(
-                        _auth.currentUser!.displayName!, userMap!['name']);
-                                  
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ChatRoom(
-                          chatRoomId: roomId,
-                          userMap: userMap!,
-                        ),
-                      ),
-                    );
-                  },
-                  title: Text(userMap!['name']),
-                ) // Show user email if found
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: chatsData.length,
-                      itemBuilder: (context, index) => ChatCard(
-                        chat: chatsData[index],
-                        press: () {
-                          print("Moving to message screen");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MessagesScreen(),
-                            ),
-                          );
-                        },
-                      ),
+                    leading: Icon(
+                      Icons.account_box_outlined,
+                      color: Colors.black,
                     ),
-                  ),
-                  
+                    trailing: Icon(
+                      Icons.chat,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      String roomId = chatRoomId(
+                          _auth.currentUser!.displayName!, userMap!['name']);
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => ChatRoom(
+                            chatRoomId: roomId,
+                            userMap: userMap!,
+                          ),
+                        ),
+                      );
+                    },
+                    title: Text(userMap!['name']),
+                  ) // Show user email if found
+                  : Expanded(
+  child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+    stream: ChatroomService.getMyChatrooms(),
+    builder: (context, snapshot) {
+      switch (snapshot.connectionState) {
+        case ConnectionState.waiting:
+          return Center(child: CircularProgressIndicator());
+        case ConnectionState.done:
+        case ConnectionState.active:
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            print("No Chats found");
+            return Center(child: Text("No chat found"));
+          }
+
+          final chatDocs = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: chatDocs.length,
+            itemBuilder: (context, index) {
+              final chatRoomId = chatDocs[index].id;
+
+              return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                future: FirebaseFirestore.instance
+                    .collection('chatroom')
+                    .doc(chatRoomId)
+                    .collection('chats')
+                    .orderBy('time', descending: true)
+                    .limit(1)
+                    .get(),
+                builder: (context, chatSnapshot) {
+                  switch (chatSnapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return SizedBox.shrink();
+                    case ConnectionState.done:
+                    case ConnectionState.active:
+                      final chatDocs = chatSnapshot.data!.docs;
+
+                      if (chatDocs.isEmpty) {
+                        return SizedBox.shrink();
+                      }
+
+                      final lastMessageData = chatDocs[0].data();
+                      final lastMessage = lastMessageData['message'] ?? '';
+
+                      return ListTile(
+                        title: Text(lastMessage),
+                        onTap: () {
+                          // Navigate to chat room or do something else
+                        },
+                      );
+                    default:
+                      return SizedBox.shrink();
+                  }
+                },
+              );
+            },
+          );
+        default:
+          return SizedBox.shrink();
+      }
+    },
+  ),
+),
+
+
+        // Expanded(
+        //     child: ListView.builder(
+        //       itemCount: chatsData.length,
+        //       itemBuilder: (context, index) => ChatCard(
+        //         chat: chatsData[index],
+        //         press: () {
+        //           print("Moving to message screen");
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //               builder: (context) => MessagesScreen(),
+        //             ),
+        //           );
+        //         },
+        //       ),
+        //     ),
+        //   ),
       ],
     );
   }
+
 }
